@@ -19,7 +19,8 @@ new Vue({
         name: '',
         value: ''
       },
-      contacts: []
+      contacts: [],
+      found: []
     }
   },
   computed: {
@@ -30,11 +31,14 @@ new Vue({
   methods: {
     async createContact() {
       const {...contact } = this.form;
-      
       const newContact = await request('/api/contacts', 'POST', contact);
       
       this.contacts.push(newContact);
       this.form.name = this.form.value = ''
+    },
+    async findContact() {
+      const name = this.form.search;
+      this.found = await request(`/api/contacts/${name}`, 'GET');
     },
     async markContact(id) {
       const contact = this.contacts.find(c => c.id === id);
@@ -54,6 +58,7 @@ new Vue({
     this.loading = true;
     this.contacts = await request('/api/contacts');
     this.loading = false;
+    console.log('', this.contacts );
   }
 });
 

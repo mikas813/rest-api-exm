@@ -12,9 +12,16 @@ app.use(express.json());
 
 app.get('/api/contacts', (req, res) => {
   setTimeout(() => {
-    res.status(200).json(CONTACTS)
+    res.json(CONTACTS)
   }, 1000);
 });
+
+app.get('/api/contacts/:name', (req, res) => {
+  const contact = [];
+  contact.push(CONTACTS.find(c => c.name === req.params.name));
+  res.json(contact)
+});
+
 
 app.post('/api/contacts', (req, res) => {
   const contact = {...req.body, id: v4(), marked: false};
@@ -24,7 +31,7 @@ app.post('/api/contacts', (req, res) => {
 
 app.delete('/api/contacts/:id', (req, res) => {
   CONTACTS = CONTACTS.filter(c => c.id !== req.params.id);
-  res.status(200).json({message: 'Contact deleted'})
+  res.json({message: 'Contact deleted'})
 });
 
 app.put('/api/contacts/:id', (req, res) => {
