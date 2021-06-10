@@ -32,7 +32,6 @@ new Vue({
     async createContact() {
       const {...contact } = this.form;
       const newContact = await request('/api/contacts', 'POST', contact);
-      
       this.contacts.push(newContact);
       this.form.name = this.form.value = ''
     },
@@ -47,7 +46,6 @@ new Vue({
         marked: true
       } );
       contact.marked = updated.marked
-  
     },
     async removeContact(id) {
       await request(`/api/contacts/${id}`, 'DELETE' );
@@ -58,7 +56,6 @@ new Vue({
     this.loading = true;
     this.contacts = await request('/api/contacts');
     this.loading = false;
-    console.log('', this.contacts );
   }
 });
 

@@ -4,9 +4,7 @@ const path = require('path');
 const PORT = 3000;
 const {v4} = require('uuid');
 
-let CONTACTS = [
-  {id: v4(), name: 'Myk', value: '321132123', marked: false}
-];
+let CONTACTS = [{id: v4(), name: 'Myk', value: '321132123', marked: false}];
 
 app.use(express.json());
 
@@ -17,11 +15,9 @@ app.get('/api/contacts', (req, res) => {
 });
 
 app.get('/api/contacts/:name', (req, res) => {
-  const contact = [];
-  contact.push(CONTACTS.find(c => c.name === req.params.name));
+  const contact = (CONTACTS.filter(c => c.name === req.params.name));
   res.json(contact)
 });
-
 
 app.post('/api/contacts', (req, res) => {
   const contact = {...req.body, id: v4(), marked: false};
